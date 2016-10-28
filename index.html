@@ -118,6 +118,7 @@ var calculate = function() {
 		color = "black";
 		if (i == 1) {i = 0};
 	}
+	document.getElementById('start').innerHTML = "Update!";
 };
 	
 var start = function() {
@@ -134,7 +135,7 @@ var start = function() {
 		document.getElementById('e_mp').value = e_mp;		
 		document.getElementById('p_red').value = p_red;		
 		document.getElementById('s_red').value = s_red;	
-		document.getElementById('start').innerHtml = "Update!";
+		document.getElementById('start').innerHTML = "Update!";
 		calculate();
 	}	
 };
