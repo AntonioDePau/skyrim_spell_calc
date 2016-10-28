@@ -163,6 +163,18 @@ for (i = 0; i < list.length; i++) {
 document.getElementById('start').onclick = function(){
 calculate();
 }
+
+function getJson(thisv) {
+    $.getJSON("spells.js", function(json) {
+        for (key in json) {
+          $.each(json[key], function(k, arrayItem) {
+            alert(arrayItem.name);
+          });
+        }
+    });
+    return false;
+}
+getJson();
 </script>
 
 </html>
