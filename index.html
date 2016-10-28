@@ -96,23 +96,6 @@ Stuff Reduction:</td><td> <input id="s_red" type="text" name="s_red" value="0">%
 
 </body>
 <script>
-var start = function() {
-	var query = window.location.hash.substring(1);
-	if (query) {
-		var query = query.split('&');
-		var s_cost = query[0];
-		var c_mp = query[1];
-		var e_mp = query[2];
-		var p_red = query[3];
-		var s_red = query[4];
-		document.getElementById('s_cost').value = s_cost;
-		document.getElementById('c_mp').value = c_mp;
-		document.getElementById('e_mp').value = e_mp;		
-		document.getElementById('p_red').value = p_red;		
-		document.getElementById('s_red').value = s_red;		
-	}	
-};
-start();
 
 var calculate = function() {
 	location.hash = parseInt(document.getElementById('s_cost').value) + "&" + parseInt(document.getElementById('c_mp').value) + "&" + parseInt(document.getElementById('e_mp').value) + "&" + parseInt(document.getElementById('p_red').value) + "&" + parseInt(document.getElementById('s_red').value);
@@ -136,6 +119,26 @@ var calculate = function() {
 		if (i == 1) {i = 0};
 	}
 };
+	
+var start = function() {
+	var query = window.location.hash.substring(1);
+	if (query) {
+		var query = query.split('&');
+		var s_cost = query[0];
+		var c_mp = query[1];
+		var e_mp = query[2];
+		var p_red = query[3];
+		var s_red = query[4];
+		document.getElementById('s_cost').value = s_cost;
+		document.getElementById('c_mp').value = c_mp;
+		document.getElementById('e_mp').value = e_mp;		
+		document.getElementById('p_red').value = p_red;		
+		document.getElementById('s_red').value = s_red;	
+		document.getElementById('start').innerHtml = "Update!";
+		calculate();
+	}	
+};
+start();
 
 var list = document.getElementsByTagName("input");
 
