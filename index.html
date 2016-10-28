@@ -14,13 +14,12 @@ width:99%;
 input {
 text-align:right;
 width:50px;
-//border-radius:5px;
-    padding: 2px 0px;
-    margin: 0px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+padding: 2px 0px;
+margin: 0px 0;
+display: inline-block;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;
 padding-right:1px;
 margin-right:5px;
 }
@@ -29,14 +28,7 @@ button{
 width: 50%;
 margin: 0 auto;
 padding:3px;
-//border-radius:0px;
 }
-
-td{
-//font-size:10px;
-//border: 1px solid black;
-}
-
 
 #res{
 border-collapse: collapse;
@@ -52,7 +44,6 @@ width:33%;
 
 #res th,#res td{
 text-align:center;
-//border: 1px solid black;
 border-radius:25px;
 }
 
@@ -66,7 +57,6 @@ margin: 0 auto;
 width: 25%;
 margin: 0 auto;
 background: rgba(255,255,255,0.75);
-//border: 1px solid black;
 border-radius: 10px;
 }
 
@@ -120,8 +110,6 @@ var start = function() {
 		document.getElementById('e_mp').value = e_mp;		
 		document.getElementById('p_red').value = p_red;		
 		document.getElementById('s_red').value = s_red;		
-		var str = query + "\r\n" + "Cost: " + s_cost + "\rMP attr: " + e_mp + "\rStuff MP: " + c_mp;
-		//alert(str);
 	}	
 };
 start();
@@ -138,7 +126,6 @@ var calculate = function() {
 	document.getElementById('result').innerHTML = "<table id='res'></table>";
 	document.getElementById('res').innerHTML = "<tr><th>School Level</th><th>Spell Cost</th></tr>";
 	for (i = 0; i <= 100; i+=5) {
-		//var f_cost = Math.round((s_cost * (1 - Math.pow((i/400), .65)) * (1 - P_RED/100) * (1 - S_RED/100)));
 		var f_cost = Math.ceil((s_cost * (1 - Math.pow((i/400), .65)) * (1 - P_RED/100) * (1 - S_RED/100)));
 		if (i == 0) {i = 1};
 		if (f_cost <= MP) {color = "green";};
