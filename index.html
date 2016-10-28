@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Magicka Cost Calculator</title>
+<link rel="icon" type="image/png" href="http://vignette3.wikia.nocookie.net/elderscrolls/images/5/5f/MAGINVShockSpellArt.png"/>
+<style>
+body{
+background-color:black;
+background: black url("logo.jpg") center 0 no-repeat;
+width:99%;
+}
+
+input {
+text-align:right;
+width:50px;
+//border-radius:5px;
+    padding: 2px 0px;
+    margin: 0px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+padding-right:1px;
+margin-right:5px;
+}
+
+button{
+width: 50%;
+margin: 0 auto;
+padding:3px;
+//border-radius:0px;
+}
+
+td{
+//font-size:10px;
+//border: 1px solid black;
+}
+
+
+#res{
+border-collapse: collapse;
+}
+
+#res th:first-of-type{
+padding-right:20px;
+}
+
+#res th{
+width:33%;
+}
+
+#res th,#res td{
+text-align:center;
+//border: 1px solid black;
+border-radius:25px;
+}
+
+
+#result{
+width: 75%;
+margin: 0 auto;
+}
+
+#content{
+width: 25%;
+margin: 0 auto;
+background: rgba(255,255,255,0.75);
+//border: 1px solid black;
+border-radius: 10px;
+}
+
+#user_in{
+width:75%;
+margin: 0 auto;
+}
+
+</style>
+</head>
+
+<body>
+
+<table id="content">
+<tr><td>
+<table id="user_in">
+<tr><td>
+Spell cost:</td><td> <input id="s_cost" type="text" name="s_cost" placeholder="0">MP<br>
+</td></tr>
+<tr><td>
+Character additional:</td><td> <input id="c_mp" type="text" name="c_mp" value="0">MP<br>
+</td></tr>
+<tr><td>
+Stuff additional:</td><td> <input id="e_mp" type="text" name="e_mp" value="0">MP<br>
+</td></tr>
+<tr><td>
+Perk Reduction:</td><td> <input id="p_red" type="text" name="p_red" value="0">%<br>
+</td></tr>
+<tr><td>
+Stuff Reduction:</td><td> <input id="s_red" type="text" name="s_red" value="0">%<br>
+</td></tr>
+<tr><td colspan="2" align="center"><button id="start" type="button">Calculate!</button><tr><td>
+</table>
+<div id="result">
+</div>
+</td></tr></table>
+
+</body>
+<script>
+var start = function() {
+	var query = window.location.hash.substring(1);
+	if (query) {
+		var query = query.split('&');
+		var s_cost = query[0];
+		var c_mp = query[1];
+		var e_mp = query[2];
+		var p_red = query[3];
+		var s_red = query[4];
+		document.getElementById('s_cost').value = s_cost;
+		document.getElementById('c_mp').value = c_mp;
+		document.getElementById('e_mp').value = e_mp;		
+		document.getElementById('p_red').value = p_red;		
+		document.getElementById('s_red').value = s_red;		
+		var str = query + "\r\n" + "Cost: " + s_cost + "\rMP attr: " + e_mp + "\rStuff MP: " + c_mp;
+		//alert(str);
+	}	
+};
+start();
+
+var calculate = function() {
+	location.hash = parseInt(document.getElementById('s_cost').value) + "&" + parseInt(document.getElementById('c_mp').value) + "&" + parseInt(document.getElementById('e_mp').value) + "&" + parseInt(document.getElementById('p_red').value) + "&" + parseInt(document.getElementById('s_red').value);
+	document.getElementById('result').innerHTML = "";
+	var MP = 100 + parseInt(document.getElementById('e_mp').value) + parseInt(document.getElementById('c_mp').value);
+	var P_RED = parseInt(document.getElementById('p_red').value);
+	var S_RED = parseInt(document.getElementById('s_red').value);
+	var RED = S_RED + P_RED;
+	var color = "black";
+	var s_cost = document.getElementById('s_cost').value;
+	document.getElementById('result').innerHTML = "<table id='res'></table>";
+	document.getElementById('res').innerHTML = "<tr><th>School Level</th><th>Spell Cost</th></tr>";
+	for (i = 0; i <= 100; i+=5) {
+		//var f_cost = Math.round((s_cost * (1 - Math.pow((i/400), .65)) * (1 - P_RED/100) * (1 - S_RED/100)));
+		var f_cost = Math.ceil((s_cost * (1 - Math.pow((i/400), .65)) * (1 - P_RED/100) * (1 - S_RED/100)));
+		if (i == 0) {i = 1};
+		if (f_cost <= MP) {color = "green";};
+		if (i != 0 && i != 1 && i != 5 && i != 10) {
+			document.getElementById('res').innerHTML = document.getElementById('res').innerHTML + "<tr><td>" + i + "</td><td><a style='color:" + color + "'>" + f_cost + "</a> MP</td></tr>";
+		}
+		color = "black";
+		if (i == 1) {i = 0};
+	}
+};
+
+var list = document.getElementsByTagName("input");
+
+for (i = 0; i < list.length; i++) {
+	list[i].onkeypress = function(e){
+		if (!e) e = window.event;
+		var keyCode = e.keyCode || e.which;
+		if (keyCode == '13'){
+		calculate();
+		}
+	}
+}
+
+document.getElementById('start').onclick = function(){
+calculate();
+}
+</script>
+
+</html>
