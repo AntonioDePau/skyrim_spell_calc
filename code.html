@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<title>Interface réponse code</title>
+		<style>		
+		h1{
+		text-align:center;
+		}
+		
+		#first, #second{
+		width:47.5%;
+		background-color:lightblue;
+		}
+		
+		#first{
+		float:left;
+		margin-right:5%;
+		}
+		
+		tr.quest > td{
+		padding-bottom:20px;
+		}
+		
+		#first:first-child{
+		}
+		
+		@media screen and (orientation: portrait) 
+		{
+			#first{
+				float:clear;
+			}
+		}
+		</style>
+	</head>
+	
+	<body>
+		<h1>40 questions :</h1>
+		<table id="first">
+		</table>
+		<table id="second">
+		</table>
+	</body>
+	<script>
+	
+var calculate = function() {
+	var first = document.getElementById('first');
+	for (i = 1; i <= 20; i++) {
+		first.innerHTML = first.innerHTML + "<tr><td colspan='4'>Question n°"+i+" :</td></tr><tr class='quest'><td><input type='checkbox'> A</td><td><input type='checkbox'> B</td><td><input type='checkbox'> C</td><td><input type='checkbox'> D</td></tr>";
+	}
+	var second = document.getElementById('second');
+	for (i = 21; i <= 40; i++) {
+		second.innerHTML = second.innerHTML + "<tr><td colspan='4'>Question n°"+i+" :</td></tr><tr class='quest'><td><input type='checkbox'> A</td><td><input type='checkbox'> B</td><td><input type='checkbox'> C</td><td><input type='checkbox'> D</td></tr>";
+	}
+};
+
+calculate();		
+	</script>
+</html>
