@@ -4,6 +4,8 @@
 	body{
 	background-image: url(http://www.actugaming.net/wp-content/uploads/2017/05/E3-2017.png);
 	background-size: 100% 100%;
+	vertical-align:middle;
+    text-align: center;
 	}
 	table {
 	border-collapse: collapse;
@@ -32,7 +34,7 @@
 	</head>
 	
 	<body style="">
-	<div style="width:35%;margin:0 auto;">
+	<div style="width:auto;margin:50 auto auto 35;display: inline-block;vertical-align:middle">
 		<table>
 		<tr>
 			<td style="border: none; background-color: rgba(255, 255, 255,0);color: rgba(255,255,255,0);"></td>
@@ -88,6 +90,12 @@
 			<td id="nd"></td>
 			<td id="nd_stream"></td>
 		</tr>
+		<tr>
+			<th>Test Live</th>
+			<td>??</td>
+			<td id="tst"></td>
+			<td id="nd_stream"></td>
+		</tr>
 		
 		
 		
@@ -97,6 +105,10 @@
 </html>
 
 <script>
+var alert = new Audio('alert.mp3');
+
+var TST = new Date("Jun 10, 2017 13:10:00").getTime();
+
 var EA = new Date("Jun 10, 2017 21:00:00").getTime();
 var XB = new Date("Jun 11, 2017 23:00:00").getTime();
 var BETH = new Date("Jun 12, 2017 06:00:00").getTime();
@@ -139,19 +151,21 @@ var streams = {
 
 for (var i = 0; i < Object.keys(streams).length; i++){
     var obj = Object.keys(streams)[i];
-	console.log(obj);
+	//console.log(obj);
 	var doc = document.getElementById(obj+"_stream");
 		if (streams[obj].yt && streams[obj].yt !== ""){
 	    doc.innerHTML = '<a href="'+streams[obj].yt+'"><img style="max-height:25px;" src="'+yt_logo+'"></a>';
-		console.log(streams[obj].yt);
+		//console.log(streams[obj].yt);
 		}
 		if (streams[obj].tw && streams[obj].tw !== ""){
 		doc.innerHTML = doc.innerHTML + '<a href="'+streams[obj].tw+'"><img src="'+tw_logo+'"></a><br>';;
-		console.log(streams[obj].tw);
+		//console.log(streams[obj].tw);
 		}
 }
 
 var x = setInterval(function() {
+  count("tst", TST);
+  
   count("ea", EA);
   count("xb", XB);
   count("beth", BETH);
@@ -161,6 +175,7 @@ var x = setInterval(function() {
   count("ps", PS);
   count("nd", ND);
 }, 1000);
+
 
 var count = function(Conf, datet){
 var now = new Date().getTime();
@@ -172,12 +187,23 @@ var now = new Date().getTime();
 
   document.getElementById(Conf).innerHTML = days + "j " + hours + "h "
   + minutes + "m " + seconds + "s";
-  if (distance < (60*30)*1000) {
+  if (distance < (60*30)*1000 && distance > 0) {
+	alarm(Conf);
     document.getElementById(Conf).style.color = "red";
     document.getElementById(Conf).style.fontWeight = "bold";
   }
   if (distance < 0) {
     document.getElementById(Conf).innerHTML = "Conférence débutée";
   }
+}
+
+var countAl = [];
+
+var alarm = function(Conf){
+	if (countAl.indexOf(Conf) == -1){
+	alert.play();
+	console.log(Conf);
+	countAl.push(Conf);
+	}
 }
 </script>
