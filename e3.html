@@ -89,15 +89,7 @@
 			<td>mercredi 13 à 18h</td>
 			<td id="nd"></td>
 			<td id="nd_stream"></td>
-		</tr>
-		<tr>
-			<th>Test Live</th>
-			<td>??</td>
-			<td id="tst"></td>
-			<td id="nd_stream"></td>
-		</tr>
-		
-		
+		</tr>	
 		
 		</table>
 	</div>
@@ -106,8 +98,6 @@
 
 <script>
 var alert = new Audio('alert.mp3');
-
-var TST = new Date("Jun 10, 2017 13:10:00").getTime();
 
 var EA = new Date("Jun 10, 2017 21:00:00").getTime();
 var XB = new Date("Jun 11, 2017 23:00:00").getTime();
@@ -164,7 +154,6 @@ for (var i = 0; i < Object.keys(streams).length; i++){
 }
 
 var x = setInterval(function() {
-  count("tst", TST);
   
   count("ea", EA);
   count("xb", XB);
