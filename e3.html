@@ -1,0 +1,173 @@
+<html>
+	<head>
+	<style>
+	table {
+	border-collapse: collapse;
+	}
+	th, td {
+	padding: 5px;
+    border: 1px solid black;
+    border-collapse: collapse;
+	}
+	
+	img {
+	max-height: 50px;
+	max-width: 50px;
+	}
+	
+	tr > td:last-child {
+	text-align:center;
+	}
+</style>
+	</head>
+	
+	<body style="width:98%;">
+	<div style="width:50%;height:100%;margin:0 auto;">
+		<table>
+		<tr>
+			<td style="border: none;"></td>
+			<th>Jour</th>
+			<th>Temps restant</th>
+			<th>Visionner sur</th>
+		</tr>
+		<tr>
+			<th>Electronic Arts</th>
+			<td>samedi 10 à 21h</td>
+			<td id="ea"></td>
+			<td id="ea_stream"></td>
+		</tr>
+		<tr>
+			<th>Xbox</th>
+			<td>dimanche 11 à 23h</td>
+			<td id="xb"></td>
+			<td id="xb_stream"></td>
+		</tr>
+		<tr>
+			<th>Bethesda</th>
+			<td>lundi 12 à 6h</td>
+			<td id="beth"></td>
+			<td id="beth_stream"></td>
+		</tr>
+		<tr>
+			<th>Devolver</th>
+			<td>lundi 12 à 7h</td>
+			<td id="dev"></td>
+			<td id="dev_stream"></td>
+		</tr>
+		<tr>
+			<th>PC Gaming Show</th>
+			<td>lundi 12 à 19h</td>
+			<td id="pc"></td>
+			<td id="pc_stream"></td>
+		</tr>
+		<tr>
+			<th>Ubisoft</th>
+			<td>lundi 12 à 22h</td>
+			<td id="ubi"></td>
+			<td id="ubi_stream"></td>
+		</tr>
+		<tr>
+			<th>PlayStation</th>
+			<td>mardi 13 à 3h</td>
+			<td id="ps"></td>
+			<td id="ps_stream"></td>
+		</tr>
+		<tr>
+			<th>Nintendo Direct</th>
+			<td>mercredi 13 à 18h</td>
+			<td id="nd"></td>
+			<td id="nd_stream"></td>
+		</tr>
+		
+		
+		
+		</table>
+	</div>
+	</body>
+</html>
+
+<script>
+var EA = new Date("Jun 10, 2017 21:00:00").getTime();
+var XB = new Date("Jun 11, 2017 23:00:00").getTime();
+var BETH = new Date("Jun 12, 2017 06:00:00").getTime();
+var DEV = new Date("Jun 12, 2017 07:00:00").getTime();
+var PC = new Date("Jun 12, 2017 19:00:00").getTime();
+var UBI = new Date("Jun 12, 2017 22:00:00").getTime();
+var PS = new Date("Jun 13, 2017 03:00:00").getTime();
+var ND = new Date("Jun 13, 2017 18:00:00").getTime();
+
+var yt_logo = "https://www.youtube.com/yt/brand/media/image/YouTube-icon-full_color.png";
+var tw_logo = "https://i.warosu.org/data/g/img/0488/82/1436268496494.png";
+
+var streams = {
+"ea": {
+"yt":"https://www.youtube.com/watch?v=P9BB0ambDQw",
+"tw":"https://www.twitch.tv/ea"
+},
+"xb": {
+"tw":"https://www.twitch.tv/xbox"
+},
+"beth": {
+"tw":"https://www.twitch.tv/bethesda"
+},
+"dev": {
+"tw":"https://www.twitch.tv/devolverdigital"
+},
+"pc": {
+"tw":"https://www.twitch.tv/pcgamer"
+},
+"ubi": {
+"tw":"https://www.twitch.tv/ubisoft"
+},
+"ps": {
+"tw":"https://www.twitch.tv/playstation"
+},
+"nd": {
+"tw":"https://www.twitch.tv/nintendo"
+}
+};
+
+for (var i = 0; i < Object.keys(streams).length; i++){
+    var obj = Object.keys(streams)[i];
+	console.log(obj);
+	var doc = document.getElementById(obj+"_stream");
+		if (streams[obj].yt && streams[obj].yt !== ""){
+	    doc.innerHTML = '<a href="'+streams[obj].yt+'"><img style="max-height:25px;" src="'+yt_logo+'"></a>';
+		console.log(streams[obj].yt);
+		}
+		if (streams[obj].tw && streams[obj].tw !== ""){
+		doc.innerHTML = doc.innerHTML + '<a href="'+streams[obj].tw+'"><img src="'+tw_logo+'"></a><br>';;
+		console.log(streams[obj].tw);
+		}
+}
+
+var x = setInterval(function() {
+  count("ea", EA);
+  count("xb", XB);
+  count("beth", BETH);
+  count("dev", DEV);
+  count("pc", PC);
+  count("ubi", UBI);
+  count("ps", PS);
+  count("nd", ND);
+}, 1000);
+
+var count = function(Conf, datet){
+var now = new Date().getTime();
+  var distance = datet - now;
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  document.getElementById(Conf).innerHTML = days + "j " + hours + "h "
+  + minutes + "m " + seconds + "s";
+  if (distance < (60*30)*1000) {
+    document.getElementById(Conf).style.color = "red";
+    document.getElementById(Conf).style.fontWeight = "bold";
+  }
+  if (distance < 0) {
+    document.getElementById(Conf).innerHTML = "Conférence débutée";
+  }
+}
+</script>
