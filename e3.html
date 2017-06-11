@@ -36,62 +36,13 @@
 	
 	<body style="">
 	<div style="width:auto;margin:50 auto auto 35;display: inline-block;vertical-align:middle">
-		<table>
+		<table id="table">
 		<tr>
 			<td style="border: none; background-color: rgba(255, 255, 255,0);color: rgba(255,255,255,0);"></td>
 			<th>Jour</th>
 			<th>Temps restant</th>
 			<th>Visionner sur</th>
-		</tr>
-		<tr>
-			<th>Electronic Arts</th>
-			<td>samedi 10 à 21h</td>
-			<td id="ea"></td>
-			<td id="ea_stream"></td>
-		</tr>
-		<tr>
-			<th>Xbox</th>
-			<td>dimanche 11 à 23h</td>
-			<td id="xb"></td>
-			<td id="xb_stream"></td>
-		</tr>
-		<tr>
-			<th>Bethesda</th>
-			<td>lundi 12 à 6h</td>
-			<td id="beth"></td>
-			<td id="beth_stream"></td>
-		</tr>
-		<tr>
-			<th>Devolver</th>
-			<td>lundi 12 à 7h</td>
-			<td id="dev"></td>
-			<td id="dev_stream"></td>
-		</tr>
-		<tr>
-			<th>PC Gaming Show</th>
-			<td>lundi 12 à 19h</td>
-			<td id="pc"></td>
-			<td id="pc_stream"></td>
-		</tr>
-		<tr>
-			<th>Ubisoft</th>
-			<td>lundi 12 à 22h</td>
-			<td id="ubi"></td>
-			<td id="ubi_stream"></td>
-		</tr>
-		<tr>
-			<th>PlayStation</th>
-			<td>mardi 13 à 3h</td>
-			<td id="ps"></td>
-			<td id="ps_stream"></td>
-		</tr>
-		<tr>
-			<th>Nintendo Direct</th>
-			<td>mercredi 13 à 18h</td>
-			<td id="nd"></td>
-			<td id="nd_stream"></td>
-		</tr>	
-		
+		</tr>		
 		</table>
 	</div>
 	</body>
@@ -100,71 +51,86 @@
 <script>
 var alert = new Audio('alert.mp3');
 
-var EA = new Date("Jun 10, 2017 21:00:00").getTime();
-var XB = new Date("Jun 11, 2017 23:00:00").getTime();
-var BETH = new Date("Jun 12, 2017 06:00:00").getTime();
-var DEV = new Date("Jun 12, 2017 07:00:00").getTime();
-var PC = new Date("Jun 12, 2017 19:00:00").getTime();
-var UBI = new Date("Jun 12, 2017 22:00:00").getTime();
-var PS = new Date("Jun 13, 2017 03:00:00").getTime();
-var ND = new Date("Jun 13, 2017 18:00:00").getTime();
-
 var yt_logo = "https://www.youtube.com/yt/brand/media/image/YouTube-icon-full_color.png";
 var tw_logo = "https://i.warosu.org/data/g/img/0488/82/1436268496494.png";
 
 var streams = {
 "ea": {
+"name":"Electronic Arts",
+"date":new Date("Jun 10, 2017 21:00:00"),
 "yt":"https://www.youtube.com/watch?v=P9BB0ambDQw",
 "tw":"https://www.twitch.tv/ea"
 },
 "xb": {
-"tw":"https://www.twitch.tv/xbox"
+"name":"Xbox",
+"date":new Date("Jun 11, 2017 23:00:00"),
+"tw":"https://www.twitch.tv/xbox",
+"yt":"https://www.youtube.com/watch?v=dZ4GpE3c97U"
 },
 "beth": {
-"tw":"https://www.twitch.tv/bethesda"
+"name":"Bethesda",
+"date":new Date("Jun 12, 2017 06:00:00"),
+"tw":"https://www.twitch.tv/bethesda",
+"yt":"https://www.youtube.com/watch?v=gbslVwy0XzY"
 },
 "dev": {
+"name":"Devolver",
+"date":new Date("Jun 12, 2017 07:00:00"),
 "tw":"https://www.twitch.tv/devolverdigital"
 },
 "pc": {
+"name":"PC gaming show",
+"date":new Date("Jun 12, 2017 19:00:00"),
 "tw":"https://www.twitch.tv/pcgamer"
 },
 "ubi": {
+"name":"Ubisoft",
+"date":new Date("Jun 12, 2017 22:00:00"),
 "tw":"https://www.twitch.tv/ubisoft"
 },
 "ps": {
+"name":"Playstation",
+"date":new Date("Jun 13, 2017 03:00:00"),
 "tw":"https://www.twitch.tv/playstation"
 },
 "nd": {
+"name":"Nintendo Direct",
+"date":new Date("Jun 13, 2017 18:00:00"),
 "tw":"https://www.twitch.tv/nintendo"
 }
 };
 
-for (var i = 0; i < Object.keys(streams).length; i++){
-    var obj = Object.keys(streams)[i];
-	//console.log(obj);
-	var doc = document.getElementById(obj+"_stream");
-		if (streams[obj].yt && streams[obj].yt !== ""){
-	    doc.innerHTML = '<a href="'+streams[obj].yt+'"><img style="max-height:25px;" src="'+yt_logo+'"></a>';
-		//console.log(streams[obj].yt);
-		}
-		if (streams[obj].tw && streams[obj].tw !== ""){
-		doc.innerHTML = doc.innerHTML + '<a href="'+streams[obj].tw+'"><img src="'+tw_logo+'"></a><br>';;
-		//console.log(streams[obj].tw);
-		}
+function formatDate(date) {
+  var dayNames = ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+  var dayIndex = date.getDay();
+  var day = date.getDate();
+  var hour = date.getHours();
+  return dayNames[dayIndex] +" "+ day +" à "+ hour +"h";
 }
 
-var x = setInterval(function() {
-  
-  count("ea", EA);
-  count("xb", XB);
-  count("beth", BETH);
-  count("dev", DEV);
-  count("pc", PC);
-  count("ubi", UBI);
-  count("ps", PS);
-  count("nd", ND);
-}, 1000);
+var interval = function(obj){
+	var x = setInterval(function() {
+		count(obj, streams[obj].date);
+	}, 1000);
+};
+
+for (var i = 0; i < Object.keys(streams).length; i++){
+    var obj = Object.keys(streams)[i];
+	var table = document.getElementById("table");
+	table.innerHTML = table.innerHTML + '<tr><td id="'+obj+'">'+streams[obj].name+'</td><td id="'+obj+'_date"></td><td id="'+obj+'_heure"></td><td id="'+obj+'_stream"></td></tr>';	
+	var stream = document.getElementById(obj+"_stream");
+	var date = document.getElementById(obj+"_date");
+		if (streams[obj].date && streams[obj].date !== ""){
+		date.innerHTML = formatDate(streams[obj].date);
+		}
+		if (streams[obj].yt && streams[obj].yt !== ""){
+	    stream.innerHTML = '<a target="_blank" href="'+streams[obj].yt+'"><img style="max-height:25px;" src="'+yt_logo+'"></a>';
+		}
+		if (streams[obj].tw && streams[obj].tw !== ""){
+		stream.innerHTML = stream.innerHTML + '<a target="_blank" href="'+streams[obj].tw+'"><img src="'+tw_logo+'"></a><br>';
+		}
+		interval(obj);
+}
 
 
 var count = function(Conf, datet){
@@ -175,15 +141,15 @@ var now = new Date().getTime();
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  document.getElementById(Conf).innerHTML = days + "j " + hours + "h "
+  document.getElementById(Conf+"_heure").innerHTML = days + "j " + hours + "h "
   + minutes + "m " + seconds + "s";
   if (distance < (60*30)*1000 && distance > 0) {
 	alarm(Conf);
-    document.getElementById(Conf).style.color = "red";
-    document.getElementById(Conf).style.fontWeight = "bold";
+    document.getElementById(Conf+"_heure").style.color = "red";
+    document.getElementById(Conf+"_heure").style.fontWeight = "bold";
   }
   if (distance < 0) {
-    document.getElementById(Conf).innerHTML = "Conférence débutée";
+    document.getElementById(Conf+"_heure").innerHTML = "Conférence débutée";
   }
 }
 
