@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Notification.requestPermission();
 });
 
-function notifyMe() {
+function notifyMe(time,conf) {
   if (!Notification) {
     alert('Desktop notifications not available in your browser. Try Chromium.'); 
     return;
@@ -185,7 +185,7 @@ function notifyMe() {
   if (Notification.permission !== "granted")
     Notification.requestPermission();
   else {
-    var notification = new Notification('E3 Conference going live soon!', {
+    var notification = new Notification(conf+' Conference going live in '+time, {
       icon: 'favicon.png',
       body: "Click here to watch the conference!",
     });
@@ -213,7 +213,7 @@ var now = new Date().getTime();
     document.getElementById(Conf+"_heure").style.fontWeight = "bold";
   }
   if (distance < 1800000 && distance > 1799000 && thirty_m_remind) { //INF 30 minutes
-  notifyMe();
+  notifyMe("30m",Conf);
   thirty_m.play();
   }
   if (distance < 300000 && distance > 299000 && five_m_remind) { // INF 5 minutes
