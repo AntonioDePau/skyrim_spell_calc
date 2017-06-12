@@ -1,6 +1,7 @@
 <html>
 	<head>
 	<title>E3 2017</title>
+	<link rel="icon" type="image/png" href="favicon.png" sizes="192x192">
 	<style>
 	body{
 	background-image: url(http://www.actugaming.net/wp-content/uploads/2017/05/E3-2017.png);
@@ -44,15 +45,26 @@
 			<th>Visionner sur</th>
 		</tr>		
 		</table>
+		
+		<table style="border-collapse: collapse;"><tr><td style="text-align:left;">
+		<label><input id="thirty_m_remind" type='checkbox' onclick='handleClick(this);' checked>Receive audio notification 30 minutes before a conference starts</label><br>
+		<label><input id="five_m_remind" type='checkbox' onclick='handleClick(this);' checked>Receive audio notification 5 minutes before a conference starts</label><br>
+		<label><input id="thirty_s_remind" type='checkbox' onclick='handleClick(this);' checked>Receive audio notification 30 sec before a conference starts</label><br>
+		</td></tr></table>
+
 	</div>
 	</body>
 </html>
 
 <script>
-var alert = new Audio('alert.mp3');
+var thirty_m = new Audio('30m.mp3');
+var five_m = new Audio('5m.mp3');
+var thirty_s = new Audio('30s.mp3');
 
 var yt_logo = "https://www.youtube.com/yt/brand/media/image/YouTube-icon-full_color.png";
 var tw_logo = "https://i.warosu.org/data/g/img/0488/82/1436268496494.png";
+
+//var total = new Date("Jun 12, 2017 06:00:00") + (30*60)*1000;
 
 var streams = {
 "ea": {
@@ -97,7 +109,14 @@ var streams = {
 "name":"Nintendo Direct",
 "date":new Date("Jun 13, 2017 18:00:00"),
 "tw":"https://www.twitch.tv/nintendo"
-}
+}//,
+//"test": {
+//"name":"Test Direct",
+//"date":new Date(new Date().setSeconds(new Date().getSeconds()+1805)), //+30 minutes
+//"date":new Date(new Date().setSeconds(new Date().getSeconds()+305)), //+5 minutes
+//"date":new Date(new Date().setSeconds(new Date().getSeconds()+36)), //+30 seconds
+//"tw":"https://www.twitch.tv/nintendo"
+//}
 };
 
 function formatDate(date) {
@@ -132,6 +151,17 @@ for (var i = 0; i < Object.keys(streams).length; i++){
 		interval(obj);
 }
 
+var thirty_m_remind = true;
+var five_m_remind = true;
+var thirty_s_remind = true;
+
+function handleClick(cb) {
+  //display("Clicked, new value = " + cb.checked);
+  var chk=cb.checked;
+  if (cb.id == "thirty_m_remind"){ thirty_m_remind = chk;};
+  if (cb.id == "five_m_remind"){ five_m_remind = chk;};
+  if (cb.id == "thirty_s_remind"){ thirty_s_remind = chk;};
+}
 
 var count = function(Conf, datet){
 var now = new Date().getTime();
@@ -144,22 +174,21 @@ var now = new Date().getTime();
   document.getElementById(Conf+"_heure").innerHTML = days + "j " + hours + "h "
   + minutes + "m " + seconds + "s";
   if (distance < (60*30)*1000 && distance > 0) {
-	alarm(Conf);
     document.getElementById(Conf+"_heure").style.color = "red";
     document.getElementById(Conf+"_heure").style.fontWeight = "bold";
   }
+  if (distance < 1800000 && distance > 1799000 && thirty_m_remind) { //INF 30 minutes
+  thirty_m.play();
+  }
+  if (distance < 300000 && distance > 299000 && five_m_remind) { // INF 5 minutes
+  five_m.play();
+  }
+  if (distance < 33000 && distance > 32000 && thirty_s_remind) { // INF 30 seconds
+  thirty_s.play();
+  }
+  
   if (distance < 0) {
     document.getElementById(Conf+"_heure").innerHTML = "Conférence débutée";
   }
-}
-
-var countAl = [];
-
-var alarm = function(Conf){
-	if (countAl.indexOf(Conf) == -1){
-	alert.play();
-	console.log(Conf);
-	countAl.push(Conf);
-	}
 }
 </script>
