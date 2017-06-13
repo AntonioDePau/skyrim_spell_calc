@@ -47,7 +47,8 @@
 		</table>
 		
 		<table style="border-collapse: collapse;"><tr><td style="text-align:left;">
-		<button onclick="handleClick('all');">Turn off all notifications</button><br>
+		<button onclick="handleClick('all',false);">Turn off all notifications</button>
+		<button onclick="handleClick('all',true);">Turn on all notifications</button><br>
 		<label><input id="thirty_m_remind" type='checkbox' onclick='handleClick(this);' checked>Receive audio notification 30 minutes before a conference starts</label><br>
 		<label><input id="thirty_m_txt" type='checkbox' onclick='handleClick(this);' checked>Receive text notification 30 minutes before a conference starts</label><br>
 		<label><input id="five_m_remind" type='checkbox' onclick='handleClick(this);' checked>Receive audio notification 5 minutes before a conference starts</label><br>
@@ -131,7 +132,8 @@ var streams = {
 };
 
 function formatDate(date) {
-  var dayNames = ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+  //var dayNames = ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+  var dayNames = ["dim","lun","mar","mer","jeu","ven","sam"];
   var dayIndex = date.getDay();
   var day = date.getDate();
   var hour = date.getHours();
@@ -169,22 +171,22 @@ var five_m_txt = true;
 var thirty_s_remind = true;
 var thirty_s_txt = true;
 
-function handleClick(cb) {
+function handleClick(cb, val) {
   //display("Clicked, new value = " + cb.checked);
   var chk=cb.checked;
   if (cb == "all"){ 
-	thirty_m_remind = false;
-	document.getElementById("thirty_m_remind").checked = false;
-	thirty_m_txt = false;
-	document.getElementById("thirty_m_txt").checked = false;
-	five_m_remind = false;
-	document.getElementById("five_m_remind").checked = false;
-	five_m_txt = false;
-	document.getElementById("five_m_txt").checked = false;
-	thirty_s_remind = false;
-	document.getElementById("thirty_s_remind").checked = false;
-	thirty_s_txt = false;
-	document.getElementById("thirty_s_txt").checked = false;
+	thirty_m_remind = val;
+	document.getElementById("thirty_m_remind").checked = val;
+	thirty_m_txt = val;
+	document.getElementById("thirty_m_txt").checked = val;
+	five_m_remind = val;
+	document.getElementById("five_m_remind").checked = val;
+	five_m_txt = val;
+	document.getElementById("five_m_txt").checked = val;
+	thirty_s_remind = val;
+	document.getElementById("thirty_s_remind").checked = val;
+	thirty_s_txt = val;
+	document.getElementById("thirty_s_txt").checked = val;
 	}
   if (cb.id == "thirty_m_remind"){ thirty_m_remind = chk;};
   if (cb.id == "thirty_m_txt"){ thirty_m_txt = chk;};
