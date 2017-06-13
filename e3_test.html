@@ -136,7 +136,7 @@ function formatDate(date) {
 
 var interval = function(obj){
 	var x = setInterval(function() {
-		count(obj, streams[obj].date);
+		count(obj, streams[obj]);
 	}, 1000);
 };
 
@@ -185,20 +185,21 @@ function notifyMe(time,conf) {
   if (Notification.permission !== "granted")
     Notification.requestPermission();
   else {
-    var notification = new Notification(conf+' Conference going live in '+time, {
+    var notification = new Notification(conf+' conference going live in '+time, {
       icon: 'favicon.png',
       body: "Click here to watch the conference!",
     });
 
     notification.onclick = function () {
-      window.open("http://stackoverflow.com/a/13328397/1269037");      
+      window.open(obj.tw);      
     };
     
   }
 
 }
 
-var count = function(Conf, datet){
+var count = function(Conf, obj){
+datet = obj.date;
 var now = new Date().getTime();
   var distance = datet - now;
   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -213,7 +214,7 @@ var now = new Date().getTime();
     document.getElementById(Conf+"_heure").style.fontWeight = "bold";
   }
   if (distance < 1800000 && distance > 1799000 && thirty_m_remind) { //INF 30 minutes
-  notifyMe("30m",Conf);
+  notifyMe("30m",Conf,obj);
   thirty_m.play();
   }
   if (distance < 300000 && distance > 299000 && five_m_remind) { // INF 5 minutes
