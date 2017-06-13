@@ -1,7 +1,7 @@
 <html>
 	<head>
 	<title>E3 2017</title>
-	<link rel="icon" type="image/png" href="favicon.png" sizes="192x192">
+	<link rel="icon" type="image/png" href="https://www.e3expo.com/favicon-192x192.png" sizes="192x192">
 	<style>
 	body{
 	background-image: url(http://www.actugaming.net/wp-content/uploads/2017/05/E3-2017.png);
@@ -48,10 +48,11 @@
 		</table>
 		
 		<table style="border-collapse: collapse;"><tr><td style="text-align:left;">
-		<button onclick="document.getElementById('notif').style.display='block';this.style.display='none';">Notification settings</button>
+		<button id="settings" onclick="document.getElementById('notif').style.display='block';this.style.display='none';">Notification settings</button>
 		<div id="notif" style="display:none;">
 		<button onclick="handleClick('all',false);">Turn off all notifications</button>
-		<button onclick="handleClick('all',true);">Turn on all notifications</button><br>
+		<button onclick="handleClick('all',true);">Turn on all notifications</button>
+		<button onclick="document.getElementById('settings').style.display='block';document.getElementById('notif').style.display='none';">Hide settings</button><br>
 		<label><input id="thirty_m_remind" type='checkbox' onclick='handleClick(this);' checked>Receive audio notification 30 minutes before a conference starts</label><br>
 		<label><input id="thirty_m_txt" type='checkbox' onclick='handleClick(this);' checked>Receive text notification 30 minutes before a conference starts</label><br>
 		<label><input id="five_m_remind" type='checkbox' onclick='handleClick(this);' checked>Receive audio notification 5 minutes before a conference starts</label><br>
@@ -129,13 +130,6 @@ var streams = {
 //"date":new Date(new Date().setSeconds(new Date().getSeconds()+36)), //+30 seconds
 "tw":"https://www.twitch.tv/nintendo"
 }
-//"test": {
-//"name":"Test Direct",
-//"date":new Date(new Date().setSeconds(new Date().getSeconds()+1805)), //+30 minutes
-//"date":new Date(new Date().setSeconds(new Date().getSeconds()+305)), //+5 minutes
-//"date":new Date(new Date().setSeconds(new Date().getSeconds()+36)), //+30 seconds
-//"tw":"https://www.twitch.tv/nintendo"
-//}
 };
 
 function formatDate(date) {
@@ -246,7 +240,7 @@ function notifyMe(time,conf,obj) {
     Notification.requestPermission();
   else {
     var notification = new Notification(obj.name+' conference going live in '+time, {
-      icon: 'favicon.png',
+      icon: 'https://www.e3expo.com/favicon-192x192.png',
       body: "Click here to watch the conference!",
     });
 
