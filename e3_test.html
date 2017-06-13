@@ -181,6 +181,8 @@ function notifyMe(time,conf) {
     alert('Desktop notifications not available in your browser. Try Chromium.'); 
     return;
   }
+  
+	console.log("Lien : "+obj.tw);
 
   if (Notification.permission !== "granted")
     Notification.requestPermission();
