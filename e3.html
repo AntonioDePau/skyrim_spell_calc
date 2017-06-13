@@ -240,7 +240,7 @@ function notifyMe(time,conf,obj) {
   if (Notification.permission !== "granted")
     Notification.requestPermission();
   else {
-    var notification = new Notification(streams.conf.name+' conference going live in '+time, {
+    var notification = new Notification(obj.name+' conference going live in '+time, {
       icon: 'favicon.png',
       body: "Click here to watch the conference!",
     });
