@@ -55,6 +55,8 @@
 		<label><input id="five_m_txt" type='checkbox' onclick='handleClick(this);' checked>Receive text notification 5 minutes before a conference starts</label><br>
 		<label><input id="thirty_s_remind" type='checkbox' onclick='handleClick(this);' checked>Receive audio notification 30 sec before a conference starts</label><br>
 		<label><input id="thirty_s_txt" type='checkbox' onclick='handleClick(this);' checked>Receive text notification 30 sec before a conference starts</label><br>
+		<br>
+		<button onclick="createConf();">Test conference and notifications</button>
 		</td></tr></table>
 
 	</div>
@@ -117,7 +119,7 @@ var streams = {
 },
 "test": {
 "name":"Test Direct",
-"date":new Date(new Date().setSeconds(new Date().getSeconds()+1805)), //+30 minutes
+"date":"", //new Date(new Date().setSeconds(new Date().getSeconds()+1805)) +30 minutes
 //"date":new Date(new Date().setSeconds(new Date().getSeconds()+305)), //+5 minutes
 //"date":new Date(new Date().setSeconds(new Date().getSeconds()+36)), //+30 seconds
 "tw":"https://www.twitch.tv/nintendo"
@@ -149,6 +151,7 @@ var interval = function(obj){
 for (var i = 0; i < Object.keys(streams).length; i++){
     var obj = Object.keys(streams)[i];
 	var table = document.getElementById("table");
+	if (obj !== "test"){
 	table.innerHTML = table.innerHTML + '<tr><td id="'+obj+'">'+streams[obj].name+'</td><td id="'+obj+'_date"></td><td id="'+obj+'_heure"></td><td id="'+obj+'_stream"></td></tr>';	
 	var stream = document.getElementById(obj+"_stream");
 	var date = document.getElementById(obj+"_date");
@@ -162,6 +165,32 @@ for (var i = 0; i < Object.keys(streams).length; i++){
 		stream.innerHTML = stream.innerHTML + '<a target="_blank" href="'+streams[obj].tw+'"><img src="'+tw_logo+'"></a><br>';
 		}
 		interval(obj);
+	}
+}
+
+function createConf(){
+	for (var i = 0; i < Object.keys(streams).length; i++){
+	var obj = Object.keys(streams)[i];
+		if (obj == "test" && !document.getElementById(obj)){
+	var table = document.getElementById("table");
+	streams[obj].date = new Date(new Date().setSeconds(new Date().getSeconds()+1805));
+	table.innerHTML = table.innerHTML + '<tr><td id="'+obj+'">'+streams[obj].name+'</td><td id="'+obj+'_date"></td><td id="'+obj+'_heure"></td><td id="'+obj+'_stream"></td></tr>';	
+	var stream = document.getElementById(obj+"_stream");
+	var date = document.getElementById(obj+"_date");
+		if (streams[obj].date && streams[obj].date !== ""){
+		date.innerHTML = formatDate(streams[obj].date);
+		}
+		if (streams[obj].yt && streams[obj].yt !== ""){
+	    stream.innerHTML = '<a target="_blank" href="'+streams[obj].yt+'"><img style="max-height:25px;" src="'+yt_logo+'"></a>';
+		}
+		if (streams[obj].tw && streams[obj].tw !== ""){
+		stream.innerHTML = stream.innerHTML + '<a target="_blank" href="'+streams[obj].tw+'"><img src="'+tw_logo+'"></a><br>';
+		}
+		interval(obj);
+	} else {
+		if (obj == "test" && document.getElementById(obj)){streams[obj].date = new Date(new Date().setSeconds(new Date().getSeconds()+1805));}
+	}
+	}
 }
 
 var thirty_m_remind = true;
