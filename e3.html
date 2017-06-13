@@ -268,15 +268,15 @@ var now = new Date().getTime();
     document.getElementById(Conf+"_heure").style.fontWeight = "bold";
   }
   if (distance < 1800000 && distance > 1799000) { //INF 30 minutes
-  if (thirty_m_txt){notifyMe("30m",Conf,obj);}
+  if (thirty_m_txt){notifyMe("30min",Conf,obj);}
   if (thirty_m_remind){thirty_m.play();}
   }
   if (distance < 300000 && distance > 299000) { // INF 5 minutes
-  if (five_m_txt){notifyMe("5m",Conf,obj);}
+  if (five_m_txt){notifyMe("5min",Conf,obj);}
   if (five_m_remind){five_m.play();}
   }
   if (distance < 33000 && distance > 32000) { // INF 30 seconds
-  if (thirty_m_txt){notifyMe("30s",Conf,obj);}
+  if (thirty_m_txt){notifyMe("30sec",Conf,obj);}
   if (thirty_m_remind){thirty_s.play();}
   }
   
