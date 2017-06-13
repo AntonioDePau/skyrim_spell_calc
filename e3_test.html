@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
     Notification.requestPermission();
 });
 
-function notifyMe(time,conf) {
+function notifyMe(time,conf,obj) {
   if (!Notification) {
     alert('Desktop notifications not available in your browser. Try Chromium.'); 
     return;
