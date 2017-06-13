@@ -47,9 +47,13 @@
 		</table>
 		
 		<table style="border-collapse: collapse;"><tr><td style="text-align:left;">
+		<button onclick="handleClick('all');">Turn off all notifications</button><br>
 		<label><input id="thirty_m_remind" type='checkbox' onclick='handleClick(this);' checked>Receive audio notification 30 minutes before a conference starts</label><br>
+		<label><input id="thirty_m_txt" type='checkbox' onclick='handleClick(this);' checked>Receive text notification 30 minutes before a conference starts</label><br>
 		<label><input id="five_m_remind" type='checkbox' onclick='handleClick(this);' checked>Receive audio notification 5 minutes before a conference starts</label><br>
+		<label><input id="five_m_txt" type='checkbox' onclick='handleClick(this);' checked>Receive text notification 5 minutes before a conference starts</label><br>
 		<label><input id="thirty_s_remind" type='checkbox' onclick='handleClick(this);' checked>Receive audio notification 30 sec before a conference starts</label><br>
+		<label><input id="thirty_s_txt" type='checkbox' onclick='handleClick(this);' checked>Receive text notification 30 sec before a conference starts</label><br>
 		</td></tr></table>
 
 	</div>
@@ -109,6 +113,13 @@ var streams = {
 "name":"Nintendo Direct",
 "date":new Date("Jun 13, 2017 18:00:00"),
 "tw":"https://www.twitch.tv/nintendo"
+},
+"test": {
+"name":"Test Direct",
+"date":new Date(new Date().setSeconds(new Date().getSeconds()+1805)), //+30 minutes
+//"date":new Date(new Date().setSeconds(new Date().getSeconds()+305)), //+5 minutes
+//"date":new Date(new Date().setSeconds(new Date().getSeconds()+36)), //+30 seconds
+"tw":"https://www.twitch.tv/nintendo"
 }
 //"test": {
 //"name":"Test Direct",
@@ -152,15 +163,34 @@ for (var i = 0; i < Object.keys(streams).length; i++){
 }
 
 var thirty_m_remind = true;
+var thirty_m_txt = true;
 var five_m_remind = true;
+var five_m_txt = true;
 var thirty_s_remind = true;
+var thirty_s_txt = true;
 
 function handleClick(cb) {
   //display("Clicked, new value = " + cb.checked);
   var chk=cb.checked;
+  if (cb == "all"){ 
+	thirty_m_remind = false;
+	document.getElementById("thirty_m_remind").checked = false;
+	thirty_m_txt = false;
+	document.getElementById("thirty_m_txt").checked = false;
+	five_m_remind = false;
+	document.getElementById("five_m_remind").checked = false;
+	five_m_txt = false;
+	document.getElementById("five_m_txt").checked = false;
+	thirty_s_remind = false;
+	document.getElementById("thirty_s_remind").checked = false;
+	thirty_s_txt = false;};
+	document.getElementById("thirty_s_txt").checked = false;
   if (cb.id == "thirty_m_remind"){ thirty_m_remind = chk;};
+  if (cb.id == "thirty_m_txt"){ thirty_m_txt = chk;};
   if (cb.id == "five_m_remind"){ five_m_remind = chk;};
+  if (cb.id == "five_m_txt"){ five_m_txt = chk;};
   if (cb.id == "thirty_s_remind"){ thirty_s_remind = chk;};
+  if (cb.id == "thirty_s_txt"){ thirty_s_txt = chk;};
 }
 
 // request permission on page load
@@ -174,8 +204,6 @@ function notifyMe(time,conf,obj) {
     alert('Desktop notifications not available in your browser. Try Chromium.'); 
     return;
   }
-  
-	console.log("Lien : "+obj.tw);
 
   if (Notification.permission !== "granted")
     Notification.requestPermission();
@@ -194,7 +222,7 @@ function notifyMe(time,conf,obj) {
 }
 
 var count = function(Conf, obj){
-datet = obj.date;
+datet = obj.date;	 
 var now = new Date().getTime();
   var distance = datet - now;
   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -208,17 +236,17 @@ var now = new Date().getTime();
     document.getElementById(Conf+"_heure").style.color = "red";
     document.getElementById(Conf+"_heure").style.fontWeight = "bold";
   }
-  if (distance < 1800000 && distance > 1799000 && thirty_m_remind) { //INF 30 minutes
-  notifyMe("30m",Conf,obj);
-  thirty_m.play();
+  if (distance < 1800000 && distance > 1799000) { //INF 30 minutes
+  if (thirty_m_txt){notifyMe("30m",Conf,obj);}
+  if (thirty_m_remind){thirty_m.play();}
   }
-  if (distance < 300000 && distance > 299000 && five_m_remind) { // INF 5 minutes
-  notifyMe("5m",Conf,obj);
-  five_m.play();
+  if (distance < 300000 && distance > 299000) { // INF 5 minutes
+  if (five_m_txt){notifyMe("5m",Conf,obj);}
+  if (five_m_remind){five_m.play();}
   }
-  if (distance < 33000 && distance > 32000 && thirty_s_remind) { // INF 30 seconds
-  notifyMe("30s",Conf,obj);
-  thirty_s.play();
+  if (distance < 33000 && distance > 32000) { // INF 30 seconds
+  if (thirty_m_txt){notifyMe("30s",Conf,obj);}
+  if (thirty_m_remind){thirty_s.play();}
   }
   
   if (distance < 0) {
