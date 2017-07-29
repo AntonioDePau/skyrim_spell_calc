@@ -3,7 +3,7 @@
 <style>
 #img{
     background-image: linear-gradient(-45deg, black 25%, transparent 25%, transparent 50%, black 50%, black 75%, transparent 75%, transparent);
-    background-size: 15px 15px;
+    background-size: 12px 12px;
 }
 </style>
 </head>
@@ -14,7 +14,8 @@
 var id = "445c2ec9-91dc-4f26-9d77-b49fa162056d";
 var url = "http://azurevoyage.wakingtitan.com/uploads/"+id+".png?";
 var img = document.getElementById("img");
-img.src = url;
+//img.src = url;
+var interval = 0;
 window.setInterval(function(){
 var today = new Date();
 	//console.log(new Date(today.getTime()));
@@ -33,7 +34,8 @@ var today = new Date();
 	var fulldate = String(mm)+String(dd)+String(yyyy)+String(hh)+String(min)+String(ss);
 	console.log("UTC Date:\n"+fulldate);
 	img.src = url+ fulldate;
-}, 5000);
+	interval = 5000;
+}, interval);
 </script>
 </html>
 
