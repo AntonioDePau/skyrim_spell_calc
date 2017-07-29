@@ -16,20 +16,22 @@ var url = "http://azurevoyage.wakingtitan.com/uploads/"+id+".png?";
 var img = document.getElementById("img");
 img.src = url;
 window.setInterval(function(){
-	var today = new Date;
-	var dd = today.getDate();
-	var mm = today.getMonth()+1; //January is 0!
+var today = new Date();
+	//console.log(new Date(today.getTime()));
+	var dd = today.getUTCDate();
+	var mm = today.getUTCMonth()+1;
 	if(mm<10){mm="0"+mm}
 	var yyyy = today.getFullYear();
-	var hh = (today.getHours())-2; //-2 for timezone
-	var min = today.getMinutes()-0;
-	var ss = (today.getSeconds()); // TEST
+	var hh = (today.getUTCHours())-0;
+	var min = today.getUTCMinutes()-0;
+	var ss = (today.getSeconds());
 	if(hh<10){hh="0"+hh}
 	if(min<10){min="0"+min}
 	if(ss<10){ss="0"+ss}
-	console.log(hh+"h\n"+min+"m\n"+ss+"s");
-	var fulldate = String(mm)+String(dd)+String(yyyy)+String(hh)+String(min)+String(ss); //07292017141537
-	console.log("Date: "+fulldate);
+	var UTC = Date.UTC(yyyy,mm,dd,hh,min,ss);
+	//console.log(new Date(UTC));
+	var fulldate = String(mm)+String(dd)+String(yyyy)+String(hh)+String(min)+String(ss);
+	console.log("UTC Date:\n"+fulldate);
 	img.src = url+ fulldate;
 }, 5000);
 </script>
