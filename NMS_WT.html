@@ -1,0 +1,38 @@
+<html>
+<head>
+<style>
+#img{
+    background-image: linear-gradient(-45deg, black 25%, transparent 25%, transparent 50%, black 50%, black 75%, transparent 75%, transparent);
+    background-size: 15px 15px;
+}
+</style>
+</head>
+<body>
+<img id="img">
+</body>
+<script>
+var id = "445c2ec9-91dc-4f26-9d77-b49fa162056d";
+var url = "http://azurevoyage.wakingtitan.com/uploads/"+id+".png?";
+var img = document.getElementById("img");
+img.src = url;
+window.setInterval(function(){
+	var today = new Date;
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	if(mm<10){mm="0"+mm}
+	var yyyy = today.getFullYear();
+	var hh = (today.getHours())-2; //-2 for timezone
+	var min = today.getMinutes()-0;
+	var ss = (today.getSeconds()); // TEST
+	if(hh<10){hh="0"+hh}
+	if(min<10){min="0"+min}
+	if(ss<10){ss="0"+ss}
+	console.log(hh+"h\n"+min+"m\n"+ss+"s");
+	var fulldate = String(mm)+String(dd)+String(yyyy)+String(hh)+String(min)+String(ss); //07292017141537
+	console.log("Date: "+fulldate);
+	img.src = url+ fulldate;
+}, 5000);
+</script>
+</html>
+
+
